@@ -1,7 +1,7 @@
 const DrawFigures = () => {
   return (
     <div>
-      <h1>Lego minifigs mystery box</h1>
+      <h1 className="text-3xl font-bold underline">Lego minifigs mystery box</h1>
       <button>lets go</button>
     </div>
   )
