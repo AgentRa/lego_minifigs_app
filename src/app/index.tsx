@@ -3,7 +3,7 @@ import { withProviders } from "./providers";
 
 const App = () => {
   return (
-    <div className="app">
+    <div className="min-h-screen">
       <Routing />
     </div>
   );
