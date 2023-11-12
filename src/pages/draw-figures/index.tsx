@@ -44,7 +44,7 @@ const DrawFigures = () => {
           onClick={drawThreeRandomFigures}
           className="isrounded-lg w-48 flex-initial  border border-sky-600 bg-sky-600 px-3 py-1 text-white hover:bg-sky-700 md:px-4 md:py-2"
         >
-          <i className="fa-solid fa-arrow-right-to-bracket"></i> Login
+          <i className="fa-solid fa-arrow-right-to-bracket"></i> Let&apos;s go
         </button>
       </div>
     </main>

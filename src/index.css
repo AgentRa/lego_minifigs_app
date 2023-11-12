@@ -81,3 +81,29 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.border-golden-glow {
+  border: 2px solid transparent; /* Set the initial border */
+  position: relative;
+}
+
+.border-golden-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px; /* Adjust the position based on your design */
+  right: -2px; /* Adjust the position based on your design */
+  bottom: -2px; /* Adjust the position based on your design */
+  left: -2px; /* Adjust the position based on your design */
+  border: 2px solid #ff7300; /* Golden color */
+  border-radius: 8px; /* Adjust the border radius based on your design */
+  opacity: 0.7; /* Adjust the opacity based on your design */
+  pointer-events: none; /* Ensure the pseudo-element doesn't interfere with clicks */
+  z-index: -1; /* Send the pseudo-element behind the element */
+  box-shadow: 0 0 10px 5px #ff9900; /* Glowing effect */
+  transition: opacity 0.3s ease-in-out; /* Add a transition for smooth effect */
+}
+
+/* Adjustments for hover effect */
+.border-golden-glow:hover::before {
+  opacity: 1;
+}

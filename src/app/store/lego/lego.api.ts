@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { IMinifig, ServerResponse } from '@/app/store/lego/models.ts';
+import { IMinifig, ISet, ServerResponse } from '@/app/store/lego/models.ts';
 
 const legoApi = createApi({
   reducerPath: 'lego/api',
@@ -13,16 +13,9 @@ const legoApi = createApi({
   }),
 
   endpoints: (build) => ({
-    getMinifig: build.query<IMinifig, number>({
-      query: (randomNumber: number) => ({
-        url: `minifigs/`,
-        params: {
-          page: randomNumber,
-          page_size: 1,
-          in_theme_id: 246,
-        },
-      }),
-      transformResponse: (response: ServerResponse<IMinifig>) => response.results[0],
+    getMinifigSet: build.query<ISet[], string>({
+      query: (set_num: string) =>  `minifigs/${set_num}/parts/`,
+      transformResponse: (response: ServerResponse<ISet>) => response.results,
     }),
     getMinifigRandom: build.query<IMinifig, Array<number>>({
       async queryFn(numbers, __, ___, fetchWithBQ) {
@@ -47,7 +40,7 @@ const legoApi = createApi({
 });
 
 // Auto-generated hooks
-export const { useLazyGetMinifigRandomQuery } = legoApi;
+export const { useLazyGetMinifigRandomQuery, useGetMinifigSetQuery } = legoApi;
 
 // Possible exports
 export const { endpoints, reducerPath, reducer: apiReducer, middleware } = legoApi;
