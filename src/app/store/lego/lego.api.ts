@@ -1,25 +1,31 @@
-import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { IMinifig, ISet, ServerResponse } from '@/shared/models.ts';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IMinifig, IPart, ISet, ServerResponse } from '@/shared/models.ts';
 
-const legoApi = createApi({
-  reducerPath: 'lego/api',
-  baseQuery: fetchBaseQuery({
+
+const simpleBaseQuery = fetchBaseQuery({
     baseUrl: 'https://rebrickable.com/api/v3/lego/',
     prepareHeaders: (headers) => {
       const apiKey = '715163f6eb9b5291b7dcb0909fca0e2d';
       headers.set('Authorization', `key ${apiKey}`);
       return headers;
     },
-  }),
+  });
+
+
+const legoApi = createApi({
+  reducerPath: 'lego/api',
+  baseQuery: simpleBaseQuery,
 
   endpoints: (build) => ({
-    getMinifigSet: build.query<ISet[], string>({
+
+    getMinifigSet: build.query<IPart[], string>({
       query: (set_num: string) =>  `minifigs/${set_num}/parts/`,
-      transformResponse: (response: ServerResponse<ISet>) => response.results,
+      transformResponse: (response: ServerResponse<ISet>) => response.results.map(res => res.part),
     }),
-    getMinifigRandom: build.query<IMinifig, Array<number>>({
-      async queryFn(numbers, __, ___, fetchWithBQ) {
-        const promises = numbers.map((number) =>
+
+    getMinifigRandom: build.query({
+      queryFn: async function(arg, _, __, fetchWithBQ) {
+        const promises = arg.map((number: number) =>
           fetchWithBQ({
             url: `minifigs/`,
             params: {
@@ -30,12 +36,17 @@ const legoApi = createApi({
           }),
         );
         const results = await Promise.all(promises);
-        const data = results.map((result) =>
-          result.data ? { data: result.data.results[0] as IMinifig[] } : { error: result.error as FetchBaseQueryError },
+        const data = results.map((result) => {
+
+            if (result.error) return { error: result.error };
+            const data = result.data as ServerResponse<IMinifig>;
+            return data.results[0];
+          },
         );
         return { data };
       },
     }),
+
   }),
 });
 
@@ -44,8 +55,3 @@ export const { useLazyGetMinifigRandomQuery, useGetMinifigSetQuery } = legoApi;
 
 // Possible exports
 export const { endpoints, reducerPath, reducer: apiReducer, middleware } = legoApi;
-// reducerPath, reducer, middleware are only used in store configuration
-// endpoints will have:
-// endpoints.getPosts.initiate(), endpoints.getPosts.select(), endpoints.getPosts.useQuery()
-// endpoints.addPost.initiate(), endpoints.addPost.select(), endpoints.addPost.useMutation()
-// see `createApi` overview for _all exports_

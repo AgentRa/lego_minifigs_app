@@ -19,7 +19,7 @@ export interface IMinifig {
 export interface ISet {
   id: number
   inv_part_id: number
-  part: Part
+  part: IPart
   set_num: string
   quantity: number
   is_spare: boolean
@@ -27,7 +27,7 @@ export interface ISet {
   num_sets: number
 }
 
-export interface Part {
+export interface IPart {
   part_num: string
   name: string
   part_cat_id: number

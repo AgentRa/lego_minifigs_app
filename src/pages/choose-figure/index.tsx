@@ -3,7 +3,7 @@ import { IMinifig } from '@/shared/models.ts';
 import { useState } from 'react';
 
 const ChooseFigurePage = () => {
-  const { state: figArr } = useLocation() as { state: Array<Record<'data', IMinifig>> };
+  const { state: figArr } = useLocation() as { state: Array<IMinifig> };
   const navigate = useNavigate();
 
   const [selectedFigure, setSelectedFigure] = useState(figArr.map(() => false));
@@ -41,14 +41,14 @@ const ChooseFigurePage = () => {
   };
 
   const proceedToSiphment = async () => {
-    navigate('/summary', { state: figArr[index].data });
+    navigate('/summary', { state: figArr[index] });
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-teal-100 via-teal-300 to-teal-500">
       <div className="flex min-h-screen flex-col items-center justify-center  gap-y-6">
         <div className="flex gap-10">
-          {figArr.map(({ data: { set_num, set_img_url, name, set_url } }, index) => {
+          {figArr.map(({ set_num, set_img_url, name, set_url }, index) => {
             return <Card image={set_img_url} key={set_num} name={name} index={index} details={set_url} />;
           })}
         </div>

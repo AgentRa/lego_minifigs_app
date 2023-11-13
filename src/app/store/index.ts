@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import appReducer from './lego/lego.slice.ts';
 import { reducerPath, apiReducer, middleware } from './lego/lego.api.ts';
 
 export const store = configureStore({
   reducer: {
-    app: appReducer,
     [reducerPath]: apiReducer
   },
   middleware: (getDefaultMiddleware) =>
