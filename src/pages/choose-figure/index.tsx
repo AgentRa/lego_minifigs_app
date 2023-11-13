@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { IMinifig } from '@/app/store/lego/models.ts';
+import { IMinifig } from '@/shared/models.ts';
 import { useState } from 'react';
 
 const ChooseFigurePage = () => {

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { IMinifig, ISet, ServerResponse } from '@/app/store/lego/models.ts';
+import { IMinifig, ISet, ServerResponse } from '@/shared/models.ts';
 
 const legoApi = createApi({
   reducerPath: 'lego/api',
