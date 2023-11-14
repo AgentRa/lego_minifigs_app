@@ -19,5 +19,5 @@ cp .env.example .env.local
 3. Start Vite development server
 
 ```bash
-npm start
+npm run dev
 ```
