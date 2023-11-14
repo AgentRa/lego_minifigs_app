@@ -1,20 +1,39 @@
-import { Routes, Route } from "react-router";
-import { lazy } from "react";
+import { Routes, Route } from 'react-router';
+import { lazy } from 'react';
 import { NoMatch } from '@/pages/no-match/404.tsx';
 
-const DrawFiguresPage = lazy(() => import("./draw-figures/index.tsx"));
-const ChooseFigurePage = lazy(() => import("./choose-figure/index.tsx"));
-const ShipmentSummaryPage = lazy(() => import("./shipment-summary/index.tsx"));
+const DrawFiguresPage = lazy(() => import('./draw-figures/index.tsx'));
+const ChooseFigurePage = lazy(() => import('./choose-figure/index.tsx'));
+const ShipmentSummaryPage = lazy(() => import('./shipment-summary/index.tsx'));
+const ErrorPage = lazy(() => import('./error/index.tsx'));
 
-export const Routing = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<DrawFiguresPage />} />
-      <Route path="/results" element={<ChooseFigurePage />} />
-      <Route path="/summary" element={<ShipmentSummaryPage />} />
-      <Route path="*" element={<NoMatch />} />
-    </Routes>
-  );
-};
+const routes = [
+  {
+    path: '/',
+    element: <DrawFiguresPage />,
+  },
+  {
+    path: '/results',
+    element: <ChooseFigurePage />,
+  },
+  {
+    path: '/summary',
+    element: <ShipmentSummaryPage />,
+  },
+  {
+    path: '/error',
+    element: <ErrorPage />,
+  },
+  {
+    path: '*',
+    element: <NoMatch />,
+  },
+];
 
-//TODO: naming convention
+export const Routing = () => (
+  <Routes>
+    {routes.map((route) => (
+      <Route key={route.path} path={route.path} element={route.element} />
+    ))}
+  </Routes>
+);

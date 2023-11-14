@@ -40,3 +40,24 @@ export type Theme = {
   name: string;
   parent_id: null;
 };
+
+export type Error = {
+  status: number;
+  data: {
+    detail: string;
+  }
+}
+
+export type FormValues = {
+  name: string;
+  surname: string;
+  email: string;
+  tel: string;
+  date: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+export type OrderInfo = { shipping: FormValues; order: IPart[] }
